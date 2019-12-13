@@ -11,7 +11,11 @@ const typeDefs = gql`
     kadi: String,
     sifre: String,
     email: String,
-    yetkiler: [Int]
+    yetkiler: [Int],
+    takip: [String],
+    takipci: [String],
+    fotograf: String,
+    yazi_adeti: Int
   }
 
   type Yazi {
@@ -30,6 +34,43 @@ const typeDefs = gql`
   type Kategori {
     _id: ID!,
     adi: String
+  }
+
+  type kayitSonuc {
+    sonuc: String
+  }
+
+  type girisSonuc {
+    sonuc: String,
+    tip: Boolean,
+    user: GirisYapmisUser
+  }
+
+  type GirisYapmisUser {
+    _id: ID!,
+    adi: String,
+    soyadi: String,
+    kadi: String,
+    email: String,
+    yetkiler: [Int],
+    takip: [String],
+    takipci: [String],
+    fotograf: String,
+    yazi_adeti: Int
+  }
+
+  input KayitUser {
+    adi: String,
+    soyadi: String,
+    kadi: String,
+    email: String,
+    sifre: String,
+    sifret: String
+  }
+
+  input GirisUser {
+    kadi: String,
+    sifre: String
   }
 
   input UserInput {
@@ -55,12 +96,15 @@ const typeDefs = gql`
     kategoriler: [Kategori],
     UserById(id: ID!): User,
     UserByKadiSifre(kadi: String, sifre: String): User!,
-    yaziById(_id: String): Yazi
+    yaziById(_id: String): Yazi,
+    TakipciByUserId(id: ID!): [User]
   }
 
   type Mutation {
     yaziEkle(yazi: YaziInput): Yazi,
-    userEkle(user: UserInput): User
+    userEkle(user: UserInput): User,
+    kayit(user: KayitUser): kayitSonuc,
+    giris(user: GirisUser): girisSonuc
   }
 
 `;
