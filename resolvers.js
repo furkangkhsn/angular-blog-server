@@ -43,7 +43,7 @@ const resolvers = {
             let user = await users.findOne({ _id: args.id }).execAsync();
             let users_arr = await users.find({ _id: { $in: user.takipci } }).execAsync();
             console.log(users_arr);
-            
+            return users_arr;
         }
     },
     Mutation: {
